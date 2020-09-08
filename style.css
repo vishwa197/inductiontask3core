@@ -1,0 +1,55 @@
+body{
+    font-size:120%;
+    background: #f8f8ff
+}
+.header{
+    width:30%;
+    color:white;
+    margin:50px auto 0px;
+    background: #5f9ea0;
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #cccccc;
+    border-radius:10px 10px 0px 0px;
+}
+form{
+    width:30%;
+    margin: 0px auto;
+    padding: 20px;
+    background:white;
+    border-radius:0px 0px 10px 10px;
+    border: 1px solid #cccccc;
+}
+.input-group{
+    margin: 10px 0px 10px 0px;
+}
+.input-group label{
+    display: block;
+    margin:3px;
+}
+.input-group input{
+    border-radius: 5px;
+    border:1px solid #cccccc;
+    font-size: 16px;
+    width: 93%;
+    padding:5px 10px;
+}
+.btn{
+    padding:10px;
+    font-size:15px;
+    color:white;
+    background-color: #5f9ea0;
+    border: none;
+    border-radius: 5px;
+}
+
+.error{
+    width:92%;
+    margin:0px auto;
+    padding:10px;
+    border-radius: 5px;
+    background:#f2dede;
+    border:1px solid red;
+    color:#a94442;
+    text-align:left;
+}
