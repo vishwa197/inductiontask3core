@@ -1,5 +1,9 @@
-<?php include($_SERVER['DOCUMENT_ROOT'].'/Registration/server.php'); ?>
+<?php include($_SERVER['DOCUMENT_ROOT'].'/Registration/server.php'); 
 
+if(empty($_SESSION['username'])){
+    header('location:login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,6 +27,12 @@
         </h3></div>
     <?php endif ?>
     
+    <?php if (isset($_SESSION["username"])): ?>
+        <p>Welcome to the buyer's dashboard, <?php echo $_SESSION["username"];?></p>
+        <p><a href="buyerdashboard.php?logout='1'" class="btn">Logout</a></p>
+    <?php endif ?>
     </div>
 </body>
 </html>
+
+

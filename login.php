@@ -1,3 +1,5 @@
+<?php include($_SERVER['DOCUMENT_ROOT'].'/Registration/server.php'); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,9 +14,15 @@
     </div>
 
     <form method="post" action="login.php">
+    <h4>Either with your Username/Email</h4>
+    <?php include('errors.php'); ?>
     <div class="input-group">
     <label>Username</label>
     <input type="text" name="username">
+    </div>
+    <div class="input-group">
+    <label>Email</label>
+    <input type="text" name="email">
     </div>
     <div class="input-group">
     <label>Password</label>
