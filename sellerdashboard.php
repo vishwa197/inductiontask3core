@@ -17,7 +17,7 @@ if(empty($_SESSION['username'])){
     <div class="header">
     <h2>Home</h2>
     </div>
-    <div class="content">
+    <div class="title">
     <?php if(isset($_SESSION['success'])):?>
         <div class="success">
         <h3>
@@ -33,5 +33,6 @@ if(empty($_SESSION['username'])){
         <p><a href="sellerdashboard.php?logout='1'" class="btn">Logout</a></p>
     <?php endif ?>
     </div>
+    
 </body>
 </html>
