@@ -31,11 +31,13 @@ if(empty($_SESSION['username'])){
             $_SESSION["cart"][0] = $item_array;
         }
     }
+    
     if (isset($_GET["action"])){
         if ($_GET["action"] == "delete"){
             foreach ($_SESSION["cart"] as $keys => $value){
                 if ($value["product_id"] == $_GET["id"]){
                     unset($_SESSION["cart"][$keys]);
+                    $_SESSION["times"]++;
                     echo '<script>alert("Product has been Removed...!")</script>';
                     echo '<script>window.location="buyerdashboard.php"</script>';
                 }
@@ -61,6 +63,26 @@ if(empty($_SESSION['username'])){
         text-align:center;
         background-color:#efefef;
     }
+    table,th,tr{
+        text-align:center;
+    }
+    input{
+    border-radius: 5px;
+    border:1px solid #cccccc;
+    font-size: 16px;
+    padding:5px 10px;
+    }
+    h3{
+        text-align:center;
+        background-color:#efefef;
+        color:#66afe9;
+    }
+    table,th{
+        background-color:#efefef;
+    }
+    p{
+        text-align:center;
+    }
     </style>
 </head>
 <body>
@@ -80,35 +102,10 @@ if(empty($_SESSION['username'])){
     
     <?php if (isset($_SESSION["username"])): ?>
         <p>Welcome to the buyer's dashboard, <?php echo $_SESSION["username"];?></p>
-        <p><a href="buyerdashboard.php?logout='1'" class="btn">Logout</a></p>
+        <p style="position:absolute; right:20px; top:190px;"><a href="buyerdashboard.php?logout='1'" class="btn">Logout</a></p>
     <?php endif ?>
     </div>
-    <div class="container">
-    <h2>Shopping Cart</h2>
-    <?php
-        $query="SELECT * FROM product ORDER BY id ASC";
-        $result=mysqli_query($db,$query);
-        if(mysqli_num_rows($result)>0){
-            while($row=mysqli_fetch_array($result)){
-        
-    ?>
-    <form method="post" action="buyerdashboard.php?action=add&id=<?php echo $row["id"] ?>">
-    <div class="product">
-    <img src="<?php echo $row["image"]; ?>">
-    <h5><?php echo $row["pname"];?></h5>
-    <h5><?php echo $row["description"]?></h5>
-    <h5><?php echo "Rs.";echo $row["price"];?></h5>
-    <input type="text" name="quantity" value="1">
-    <input type="hidden" name="hidden_name" value="<?php echo $row["pname"];?>">
-    <input type="hidden" name="hidden_price" value="<?php echo $row["price"];?>">
-    <input type="submit" name="add" style="margin-top:5px;" value="Add to Cart">
-    </div>
-    </form>
-    <?php
-            }
-        }
-    ?>
-    <h3 class="title2">Shopping cart details</h3>
+    <h3 class="title2">Your shopping cart details</h3>
         <div class="table">
         <table>
             <tr>
@@ -123,6 +120,7 @@ if(empty($_SESSION['username'])){
                 $total=0;
                 foreach ($_SESSION['cart'] as $key => $value){
                     ?>
+            <form method="post" action="buyerdashboard.php">
             <tr>
                 <td><?php echo $value['item_name'];?></td>    
                 <td><?php echo $value['item_quantity'];?></td>
@@ -137,12 +135,57 @@ if(empty($_SESSION['username'])){
             <tr>
                 <td align="right">Total</td>
                 <th align="right"><?php echo "Rs.";echo number_format($total,2);?></th>
-                <td></td>
             </tr>
+            <div class="input-group">
+            <button type="submit" name="purchase" class="btn">Purchase</button>
+            </div>
+            </form>
             <?php
+            }
+            $items=[];
+            if(isset($_POST['purchase'])){
+                foreach ($_SESSION['cart'] as $key => $value){
+                    array_push($items,$value['item_name']);                    
+                }
+                $y=serialize($items);
+                $query5="UPDATE users SET purchases VALUES=$y WHERE username='$username'";
+                $result3=mysqli_query($db,$query5);
+                $row1 = mysqli_fetch_array($result3);
+                $history=$row1['purchases'];
+                $history=unserialize($history);
+                echo '<script>window.location="buyerdashboard.php"</script>';
+                foreach ($history as $log){
+                    echo $log;
+                }
             }
             ?>
             </table>
+    <div class="container">
+    <h2 style="text-align:center";>Shopping Cart</h2>
+    <?php
+        $query="SELECT * FROM product ORDER BY id ASC";
+        $result=mysqli_query($db,$query);
+        if(mysqli_num_rows($result)>0){
+            while($row=mysqli_fetch_array($result)){
+        
+    ?>
+    <form method="post" action="buyerdashboard.php?action=add&id=<?php echo $row["id"] ?>">
+    <div class="product">
+    <img src="<?php echo $row["image1"]; ?>">
+    <h5><?php echo $row["pname"];?></h5>
+    <h5><?php echo $row["description1"]?></h5>
+    <h5><?php echo "Rs.";echo $row["price"];?></h5>
+    <input type="text" name="quantity" value="1">
+    <input type="hidden" name="hidden_name" value="<?php echo $row["pname"];?>">
+    <input type="hidden" name="hidden_price" value="<?php echo $row["price"];?>">
+    <input type="submit" name="add" class="btn";" value="Add to Cart">
+    </div>
+    </form>
+    <?php
+            }
+        }
+    ?>
+    
         </div>
     </div>
 </body>

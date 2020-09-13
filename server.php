@@ -10,7 +10,7 @@
         $password_2=mysqli_real_escape_string($db,$_POST['password_2']);
         $name=mysqli_real_escape_string($db,$_POST['name']);
         $role=mysqli_real_escape_string($db,$_POST['role']);
-
+    
         if(empty($role)){
             array_push($errors,"Your role is required");
         }
