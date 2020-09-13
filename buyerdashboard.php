@@ -28,7 +28,7 @@ if(empty($_SESSION['username'])){
                 'product_price' => $_POST["hidden_price"],
                 'item_quantity' => $_POST["quantity"],
             );
-            $_SESSION["cart"][0] = $item_array;
+            $_SESSION["cart"][0] = $item_array;             //Option to add products to the cart
         }
     }
     
@@ -39,7 +39,7 @@ if(empty($_SESSION['username'])){
                     unset($_SESSION["cart"][$keys]);
                     $_SESSION["times"]++;
                     echo '<script>alert("Product has been Removed...!")</script>';
-                    echo '<script>window.location="buyerdashboard.php"</script>';
+                    echo '<script>window.location="buyerdashboard.php"</script>';       //Option remove products from cart
                 }
             }
         }
@@ -110,7 +110,7 @@ if(empty($_SESSION['username'])){
         <table>
             <tr>
             <th width="30%">Product Name</th>
-            <th width="20%">Quantity</th>
+            <th width="30%">Quantity</th>
             <th width="30%">Price</th>
             <th width="30%">Total Price</th>
             <th width="30%">Remove Item</th>
@@ -134,7 +134,7 @@ if(empty($_SESSION['username'])){
             ?>
             <tr>
                 <td align="right">Total</td>
-                <th align="right"><?php echo "Rs.";echo number_format($total,2);?></th>
+                <th align="right"><?php echo "Rs.";echo number_format($total,2);?></th>         <!--Cart's products and its total -->
             </tr>
             <div class="input-group">
             <button type="submit" name="purchase" class="btn">Purchase</button>
@@ -155,7 +155,7 @@ if(empty($_SESSION['username'])){
                 $history=unserialize($history);
                 echo '<script>window.location="buyerdashboard.php"</script>';
                 foreach ($history as $log){
-                    echo $log;
+                   echo $log;                                   //Unable to create purchase option
                 }
             }
             ?>
@@ -178,7 +178,7 @@ if(empty($_SESSION['username'])){
     <input type="text" name="quantity" value="1">
     <input type="hidden" name="hidden_name" value="<?php echo $row["pname"];?>">
     <input type="hidden" name="hidden_price" value="<?php echo $row["price"];?>">
-    <input type="submit" name="add" class="btn";" value="Add to Cart">
+    <input type="submit" name="add" class="btn";" value="Add to Cart">              <!--Displaying Product details-->
     </div>
     </form>
     <?php

@@ -57,7 +57,7 @@ if(empty($_SESSION['username'])){
     </div>
     <div class="input-group">
     <button type="submit" name="upload" class="btn">Upload</button>
-    </div>
+    </div>                                                                <!--Getting new added product's details-->          
 
    
 
@@ -68,7 +68,6 @@ if(empty($_SESSION['username'])){
         $image=mysqli_real_escape_string($db,$_POST['image']);
         $price=mysqli_real_escape_string($db,$_POST['price']);
         $quantity=mysqli_real_escape_string($db,$_POST['quantity']);
-    
         if(empty($name)){
             array_push($errors,"Name of the commodity is required");
         }
@@ -79,11 +78,12 @@ if(empty($_SESSION['username'])){
             array_push($errors,"Availability of the commodity is required");
         }
         if(count($errors)==0){
+
             $sql2="INSERT INTO product (pname, description1, image1, price, quantity)
                         VALUES ('$name', '$description', '$image', '$price', '$quantity')";
             mysqli_query($db,$sql2);
         }
-    }
+    }                                                                   //Uploading the product by the seller to the database
     ?>
     
 </body>

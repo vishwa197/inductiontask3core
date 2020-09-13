@@ -1,7 +1,7 @@
 <?php
     session_start();
 
-    $db = mysqli_connect('localhost','root','','registration');
+    $db = mysqli_connect('localhost','root','','registration');  //Through myphpadmin mysql admin can access data
     $errors=[];
     if(isset($_POST['register'])){
         $username=mysqli_real_escape_string($db,$_POST['username']);
@@ -9,7 +9,7 @@
         $password_1=mysqli_real_escape_string($db,$_POST['password_1']);
         $password_2=mysqli_real_escape_string($db,$_POST['password_2']);
         $name=mysqli_real_escape_string($db,$_POST['name']);
-        $role=mysqli_real_escape_string($db,$_POST['role']);
+        $role=mysqli_real_escape_string($db,$_POST['role']);   //Details by the user to set his dashboard
     
         if(empty($role)){
             array_push($errors,"Your role is required");
@@ -36,7 +36,7 @@
             array_push($errors,"Your Password Must Contain At Least 1 Capital Letter!");
         }
         elseif(!preg_match("#[a-z]+#",$password_1)) {
-            array_push($errors,"Your Password Must Contain At Least 1 Lowercase Letter!");
+            array_push($errors,"Your Password Must Contain At Least 1 Lowercase Letter!");  //Validation techniques for password
         }
         if($password_1 != $password_2){
             array_push($errors,"Passwords do not match");
@@ -49,7 +49,7 @@
   	if (mysqli_num_rows($res_u) > 0) {
   	  array_push($errors,"Sorry... username already taken"); 	
   	}else if(mysqli_num_rows($res_e) > 0){
-  	  array_push($errors,"Sorry... email already taken"); 	
+  	  array_push($errors,"Sorry... email already taken"); 	    //Making sure useranme and emailid are unique for all users
       }
       else{
         if(count($errors)==0 && $role=='buyer'){
@@ -57,7 +57,7 @@
                         VALUES ('$username', '$email', '$password_1', '$name', '$role')";
             mysqli_query($db,$sql);
             $_SESSION['username']=$username;
-            $_SESSION['success']="Successfully logged in!";
+            $_SESSION['success']="Successfully created account and logged in!";
             header('location:buyerdashboard.php');
         }
         elseif(count($errors)==0 && $role=='seller'){
@@ -65,7 +65,7 @@
                         VALUES ('$username', '$email', '$password_1', '$name', '$role')";
             mysqli_query($db,$sql);
             $_SESSION['username']=$username;
-            $_SESSION['success']="Successfully logged in!";
+            $_SESSION['success']="Successfully created account and logged in!";
             header('location:sellerdashboard.php');
         }
     }
@@ -110,6 +110,6 @@
     if(isset($_GET['logout'])){
         unset($_SESSION['cart']);
         unset($_SESSION['username']);
-        header('location:login.php');
+        header('location:login.php');    //logging out 
     }
 ?>
